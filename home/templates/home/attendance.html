@@ -1,0 +1,64 @@
+{% extends 'home/hr_base.html' %}
+
+{% block content %}
+
+
+    <div class="mb-4">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label for="start_date" class="form-label">Start Date</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" value="{{ start_date }}">
+            </div>
+            <div class="col-md-4">
+                <label for="end_date" class="form-label">End Date</label>
+                <input type="date" name="end_date" id="end_date" class="form-control" value="{{ end_date }}">
+            </div>
+            <div class="col-md-4 d-grid">
+                <button type="submit" class="btn btn-primary">Filter by Date Range</button>
+            </div>
+        </form>
+    </div>
+    
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>#</th>
+                <th>Employee</th>
+                <th>Employee Code</th>
+                <th>Date</th>
+                <th>Work Mode</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rec in records %}
+            <tr class="text-center">
+                <td>{{ forloop.counter }}</td>
+                <td>{{ rec.employee.username }}</td>
+                <td>{{ rec.employee.employee_code }}</td>
+                <td>{{ rec.date }}</td>
+                <td>
+                    {% if rec.work_mode == 'office' %}
+                        <span class="badge bg-success">Office</span>
+                    {% else %}
+                        <span class="badge bg-info text-dark">Work From Home</span>
+                    {% endif %}
+                </td>
+                <td>{{ rec.check_in|default:"-" }}</td>
+                <td>{{ rec.check_out|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center text-muted">No attendance records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-end">
+        <a href="{% url 'hr_home' %}" class="btn btn-secondary">Back to Home</a>
+    </div>
+
+{% endblock %}

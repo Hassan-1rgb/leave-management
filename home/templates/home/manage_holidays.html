@@ -1,0 +1,83 @@
+{% extends 'home/admin_base.html' %}
+
+{% block content %}
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand">Admin - Holiday Management</span>
+      <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-light">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+
+    <!-- Success or Warning Messages -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <!-- Form Heading -->
+    <h3 class="mb-4 text-center">
+      {% if holiday_to_edit %}Edit Holiday{% else %}Add New Holiday{% endif %}
+    </h3>
+
+    <!-- Holiday Form -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-6">
+        <form method="POST">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">
+              {% if holiday_to_edit %}Update{% else %}Add{% endif %} Holiday
+            </button>
+            {% if holiday_to_edit %}
+              <a href="{% url 'manage_holidays' %}" class="btn btn-secondary">Cancel</a>
+            {% endif %}
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Holiday List -->
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <h5 class="text-muted mb-3">Upcoming Holidays</h5>
+        <ul class="list-group">
+          {% for h in holidays %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ h.name }}</strong> — {{ h.date|date:"M d, Y" }}
+              </div>
+              <div>
+                <a href="?edit={{ h.id }}" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                <a href="{% url 'delete_holiday' h.id %}" class="btn btn-sm btn-outline-danger"
+                   onclick="return confirm('Are you sure you want to delete this holiday?');">
+                   Delete
+                </a>
+              </div>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-center">No holidays added yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-5">
+      <a href="{% url 'admin_home' %}" class="btn btn-outline-secondary">
+        ← Back to Admin Panel
+      </a>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

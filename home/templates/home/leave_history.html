@@ -1,0 +1,58 @@
+{% extends 'home/employee_base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">My Leave History</h4>
+        </div>
+        <div class="card-body">
+            {% if leaves %}
+                <table class="table table-bordered table-striped">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Leave Type</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Reason</th>
+                            <th>Attachment</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for leave in leaves %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ leave.get_leave_type_display }}</td>
+                            <td>{{ leave.start_date }}</td>
+                            <td>{{ leave.end_date }}</td>
+                            <td>{{ leave.reason }}</td>
+                            <td>
+                                {% if leave.attachment %}
+                                    <a href="{{ leave.attachment.url }}" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                                {% else %}
+                                    <span class="text-muted">No file</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if leave.status == "approved" %}
+                                    <span class="badge bg-success">{{ leave.status|title }}</span>
+                                {% elif leave.status == "rejected" %}
+                                    <span class="badge bg-danger">{{ leave.status|title }}</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ leave.status|title }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-muted">No leave history found.</p>
+            {% endif %}
+            <a href="{% url 'employee_home' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

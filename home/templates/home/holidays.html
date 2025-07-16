@@ -1,0 +1,22 @@
+{% extends 'home/admin_base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+  <h2 class="text-center text-primary mb-4">Upcoming Holidays</h2>
+
+  {% if holidays %}
+    <ul class="list-group shadow-sm">
+      {% for holiday in holidays %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong>{{ holiday.name }}</strong>
+          <span class="text-muted">{{ holiday.date }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="alert alert-info text-center">No upcoming holidays found.</div>
+  {% endif %}
+</div>
+
+{% endblock %}

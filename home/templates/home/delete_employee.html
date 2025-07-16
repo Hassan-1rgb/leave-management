@@ -1,0 +1,15 @@
+{% extends 'home/admin_base.html' %}
+
+{% block content %}
+  <h2>Delete Employee</h2>
+  <form method="post">
+    {% csrf_token %}
+    <select name="employee_id" class="form-select mb-3">
+      {% for emp in employees %}
+        <option value="{{ emp.id }}">{{ emp.username }} ({{ emp.role }})</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'admin_home' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

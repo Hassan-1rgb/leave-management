@@ -1,0 +1,33 @@
+{% extends 'home/employee_base.html' %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold text-dark">Welcome, {{ employee.username }}</h2>
+    <p class="text-muted fs-5">This is your personal dashboard to manage leave applications and view your leave balance. Plan your time off wisely!</p>
+  </div>
+
+  
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="border border-1 rounded-3 bg-white p-4">
+        <h5 class="mb-3 text-center text-secondary">Leave Balance</h5>
+        <div class="list-group">
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Annual Leaves</span>
+            <span class="text-primary fw-semibold">{{ remaining_leaves.annual }}</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Sick Leaves</span>
+            <span class="text-warning fw-semibold">{{ remaining_leaves.sick }}</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Casual Leaves</span>
+            <span class="text-success fw-semibold">{{ remaining_leaves.casual }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

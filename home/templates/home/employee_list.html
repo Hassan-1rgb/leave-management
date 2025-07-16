@@ -1,0 +1,60 @@
+{% extends base_template %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="table-container">
+        <h2 class="text-center">Employee Directory</h2>
+
+        <table class="table table-bordered table-hover table-striped align-middle">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>#</th>
+                    <th>Employee Code</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in employees %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            {% if emp.employee_code %}
+                                <span class="badge bg-secondary">{{ emp.employee_code }}</span>
+                            {% else %}
+                                <span class="text-muted">N/A</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ emp.username }}</td>
+                        <td><a href="mailto:{{ emp.email }}" class="text-decoration-none">{{ emp.email }}</a></td>
+                        <td>
+                            {% if emp.department %}
+                                <span class="badge bg-primary">{{ emp.department.name }}</span>
+                            {% else %}
+                                <span class="text-muted">N/A</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'employee_monthly_attendance' emp.id %}" class="btn btn-outline-info btn-sm">
+                                <i class="bi bi-calendar-check"></i> View Attendance
+                            </a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">No employees found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-end mt-4">
+            <a href="{% url back_url %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

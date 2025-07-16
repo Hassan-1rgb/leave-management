@@ -1,0 +1,50 @@
+{% extends 'home/employee_base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-info text-white">
+            <h4>My Work From Home Requests</h4>
+        </div>
+        <div class="card-body">
+            {% if wfh_requests %}
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Status</th> <!-- ✅ Added Status Column -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for req in wfh_requests %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ req.date }}</td>
+                            <td>{{ req.start_time }}</td>
+                            <td>{{ req.end_time }}</td>
+                            <td>
+                                {% if req.status == 'pending' %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                {% elif req.status == 'approved' %}
+                                    <span class="badge bg-success">Approved</span>
+                                {% elif req.status == 'rejected' %}
+                                    <span class="badge bg-danger">Rejected</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Unknown</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-muted">No work from home requests found.</p>
+            {% endif %}
+            <a href="{% url 'employee_home' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

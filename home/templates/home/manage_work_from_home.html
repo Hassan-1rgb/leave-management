@@ -1,0 +1,61 @@
+{% extends 'home/hr_base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 text-center">Work From Home Requests</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>#</th>
+                    <th>Employee</th>
+                    <th>Employee Code</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in wfh_requests %}
+                <tr class="text-center">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ request.employee.username }}</td>
+                    <td>{{ request.employee.employee_code|default:"N/A" }}</td>
+                    <td>{{ request.date }}</td>
+                    <td>{{ request.start_time }}</td>
+                    <td>{{ request.end_time }}</td>
+                    <td>
+                        {% if request.status == 'pending' %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% elif request.status == 'approved' %}
+                            <span class="badge bg-success">Approved</span>
+                        {% elif request.status == 'rejected' %}
+                            <span class="badge bg-danger">Rejected</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if request.status == 'pending' %}
+                            <a href="{% url 'approve_wfh' request.id %}" class="btn btn-sm btn-success">Approve</a>
+                            <a href="{% url 'reject_wfh' request.id %}" class="btn btn-sm btn-danger">Reject</a>
+                        {% else %}
+                            <span class="text-muted">No actions</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center text-muted">No Work From Home requests found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-end">
+        <a href="{% url back_url %}" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+{% endblock %}
