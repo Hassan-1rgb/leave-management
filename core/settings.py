@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'login',  # your DB name in PA
         'USER': 'hassanjaved',
-        'PASSWORD': 'your_db_password',  # set this in PA
+        'PASSWORD': '',  # set this in PA
         'HOST': 'hassanjaved.mysql.pythonanywhere-services.com',
         'PORT': '3306',
     }
