@@ -81,13 +81,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hassanjaved$login',  # note the format: username$dbname
-        'USER': 'hassanjaved',
-        'PASSWORD': 'hello12',  # replace with your actual PA DB password
-        'HOST': 'hassanjaved.mysql.pythonanywhere-services.com',
+        'NAME': 'login',
+        'USER': 'root',  # or your MySQL username
+        'PASSWORD': '',  # or your password
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
+
 
 
 
