@@ -75,7 +75,8 @@ def add_employee(request):
             user = form.save(commit=False)
             if user.role == 'employee':
                 user.save()
-                return redirect('hr_home')
+                messages.success(request, 'Employee added successfully!')
+                return redirect('employee_list')
             else:
                 form.add_error('role', 'You are only allowed to add employees.')
     else:
@@ -135,18 +136,19 @@ def apply_leave(request):
         return redirect('login')
 
     employee = AppUser.objects.get(id=request.session['user_id'])
+
     if request.method == 'POST':
         form = LeaveRequestForm(request.POST, request.FILES)
         if form.is_valid():
             leave = form.save(commit=False)
             leave.employee = employee
             leave.save()
+            messages.success(request, 'Leave applied successfully!')
             return redirect('leave_history')
     else:
         form = LeaveRequestForm()
 
     return render(request, 'home/apply_leave.html', {'form': form})
-
 def leave_history(request):
     if 'user_id' not in request.session:
         return redirect('login')

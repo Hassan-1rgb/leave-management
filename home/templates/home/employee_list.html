@@ -5,6 +5,16 @@
     <div class="table-container">
         <h2 class="text-center">Employee Directory</h2>
 
+        <!-- Success Message -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
         <table class="table table-bordered table-hover table-striped align-middle">
             <thead class="table-dark text-center">
                 <tr>
